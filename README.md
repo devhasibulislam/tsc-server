@@ -1,4 +1,5 @@
 # TSC server side
 
 ## Important links
-* GitHub repo [click here](https://github.com/hasibulislam999/tsc-server)
+* server GitHub repo [click here](https://github.com/hasibulislam999/tsc-server)
+* client GitHub repo [click here](https://github.com/hasibulislam999/tsc-client)
