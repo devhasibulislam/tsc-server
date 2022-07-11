@@ -118,8 +118,12 @@ async function run() {
         })
 
         // get all todo => R
-        app.get('/todo', async (req, res) => {
-            res.send(await todoCollection.find({}).toArray());
+        app.get('/completeTodo', async (req, res) => {
+            res.send(await todoCollection.find({ status: { $eq: 'checked' } }).toArray());
+        })
+        
+        app.get('/incompleteTodo', async (req, res) => {
+            res.send(await todoCollection.find({ status: { $eq: 'unchecked' } }).toArray());
         })
 
         // update a todo => U
