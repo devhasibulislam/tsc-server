@@ -54,24 +54,24 @@ async function run() {
          * TEACHER segment
          */
 
-        // add new teacher
+        // add new teacher => C
         app.post('/teacher', async (req, res) => {
             res.send(await teacherCollection.insertOne(req.body));
         });
 
-        // get all teachers
+        // get all teachers => R
         app.get('/teachers', async (req, res) => {
-            res.send(await teacherCollection.find({}).toArray());
+            res.send(await teacherCollection.find({}).skip(parseInt(req.query.page) * 5).limit(5).toArray());
         })
 
-        // delete a teacher
-        app.delete('/teacher/:id', async (req, res) => {
-            res.send(await teacherCollection.deleteOne({ _id: ObjectId(req.params.id) }));
-        })
-
-        // update a teacher
+        // update a teacher => U
         app.put('/teacher/:id', async (req, res) => {
             res.send(await teacherCollection.updateOne({ _id: ObjectId(req.params.id) }, { $set: req.body }, { upsert: true }));
+        })
+
+        // delete a teacher => D
+        app.delete('/teacher/:id', async (req, res) => {
+            res.send(await teacherCollection.deleteOne({ _id: ObjectId(req.params.id) }));
         })
 
         // count total teachers
@@ -83,29 +83,53 @@ async function run() {
          * STUDENT segment
          */
 
-        // add new student
+        // add new student => C
         app.post('/student', async (req, res) => {
             res.send(await studentCollection.insertOne(req.body));
         });
 
-        // get all students
+        // get all students => R
         app.get('/students', async (req, res) => {
             res.send(await studentCollection.find({}).skip(parseInt(req.query.page) * 5).limit(5).toArray());
         })
 
-        // delete a student
-        app.delete('/student/:id', async (req, res) => {
-            res.send(await studentCollection.deleteOne({ _id: ObjectId(req.params.id) }));
-        })
-
-        // update a student
+        // update a student => U
         app.put('/student/:id', async (req, res) => {
             res.send(await studentCollection.updateOne({ _id: ObjectId(req.params.id) }, { $set: req.body }, { upsert: true }));
+        })
+
+        // delete a student => D
+        app.delete('/student/:id', async (req, res) => {
+            res.send(await studentCollection.deleteOne({ _id: ObjectId(req.params.id) }));
         })
 
         // count total students
         app.get('/studentsCount', async (req, res) => {
             res.send({ totalStudents: await studentCollection.estimatedDocumentCount() });
+        })
+
+        /**
+         * TODO segment
+         */
+
+        // add new todo => C
+        app.post('/todo', async (req, res) => {
+            res.send(await todoCollection.insertOne(req.body));
+        })
+
+        // get all todo => R
+        app.get('/todo', async (req, res) => {
+            res.send(await todoCollection.find({}).toArray());
+        })
+
+        // update a todo => U
+        app.put('/todo/:id', async (req, res) => {
+            res.send(await todoCollection.updateOne({ _id: ObjectId(req.params.id) }, { $set: req.body }, { upsert: true }));
+        })
+
+        // delete a todo => D
+        app.delete('/todo/:id', async (req, res) => {
+            res.send(await todoCollection.deleteOne({ _id: ObjectId(req.params.id) }));
         })
     } finally {
         // await database.close();
