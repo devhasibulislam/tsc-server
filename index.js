@@ -70,10 +70,6 @@ async function run() {
             res.send(await teacherCollection.updateOne({ _id: ObjectId(req.params.id) }, { $set: req.body }, { upsert: true }));
         })
 
-        // add new student
-        app.post('/student', async (req, res) => {
-            res.send(await studentCollection.insertOne(req.body));
-        });
     } finally {
         // await database.close();
     }
