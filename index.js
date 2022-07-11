@@ -70,6 +70,25 @@ async function run() {
             res.send(await teacherCollection.updateOne({ _id: ObjectId(req.params.id) }, { $set: req.body }, { upsert: true }));
         })
 
+        // add new student
+        app.post('/student', async (req, res) => {
+            res.send(await studentCollection.insertOne(req.body));
+        });
+
+        // get all students
+        app.get('/students', async (req, res) => {
+            res.send(await studentCollection.find({}).toArray());
+        })
+
+        // delete a student
+        app.delete('/student/:id', async (req, res) => {
+            res.send(await studentCollection.deleteOne({ _id: ObjectId(req.params.id) }));
+        })
+
+        // update a student
+        app.put('/student/:id', async (req, res) => {
+            res.send(await studentCollection.updateOne({ _id: ObjectId(req.params.id) }, { $set: req.body }, { upsert: true }));
+        })
     } finally {
         // await database.close();
     }
