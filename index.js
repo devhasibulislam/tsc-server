@@ -14,8 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // mongodb connectivity
-// const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@tsc.pcq06.mongodb.net/?retryWrites=true&w=majority`;
-const uri = "mongodb+srv://tsc:liJFuQ9o94StYW4D@tsc.pcq06.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@tsc.pcq06.mongodb.net/?retryWrites=true&w=majority`;
 const database = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function run() {
@@ -121,7 +120,7 @@ async function run() {
         app.get('/completeTodo', async (req, res) => {
             res.send(await todoCollection.find({ status: { $eq: 'checked' } }).toArray());
         })
-
+        
         app.get('/incompleteTodo', async (req, res) => {
             res.send(await todoCollection.find({ status: { $eq: 'unchecked' } }).toArray());
         })
